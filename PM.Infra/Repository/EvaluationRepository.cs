@@ -23,7 +23,7 @@ namespace PM.Infra.Repository
         {
             await _db.Connection.ExecuteAsync("INSERT INTO Evaluation(" +
                 "Id, " +
-                "UserId, " +
+                "PMUserId, " +
                 "FarmId, " +
                 "Period" +
                 "QtdLeaf, " +
@@ -32,7 +32,7 @@ namespace PM.Infra.Repository
                 "Note, " +
                 "Date) values" +
                 "(@Id, " +
-                "@UserId, " +
+                "@PMUserId, " +
                 "@FarmId, " +
                 "@Period, " +
                 "@QtdLeaf, " +

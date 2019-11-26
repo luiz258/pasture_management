@@ -12,7 +12,8 @@ using PM.Business.Models;
 namespace PM.Api.Controllers
 {
    
-  
+    [ApiController]
+    [Route("v1/pasture")]
     public class PastureController : Controller
     {
         private readonly IPastureRepository _repPasture;
@@ -31,14 +32,14 @@ namespace PM.Api.Controllers
         }
 
         
-        [HttpGet("v1/pasture")]
+        [HttpGet("v1/listPature")]
         [AllowAnonymous]
         public async Task<IEnumerable<Pasture>> GetListFarm()
         {
             return await _repPasture.ListPasture();
         }
         
-        [HttpGet("v1/pasture/{id}")]
+        [HttpGet("v1/listHistoric/{id:string}")]
         [AllowAnonymous]
         public async Task<IEnumerable<Pasture>> GetListHistoricDatasFarm( Guid farmId)
         {
@@ -46,7 +47,7 @@ namespace PM.Api.Controllers
         }
 
        
-        [HttpGet("v1/pasture/{id},{id}")]
+        [HttpGet("v1/pasture/{id:string},{id:string}")]
         [AllowAnonymous]
         public async Task<Pasture> GetDetail(Guid farmId, Guid pastureId)
         {
@@ -55,7 +56,7 @@ namespace PM.Api.Controllers
         }
 
      
-        [HttpPost("v1/pasture")]
+        [HttpPost("v1/create")]
         [AllowAnonymous]
         public async Task<IActionResult> Post([FromBody] Pasture pasture )
         {
@@ -73,9 +74,9 @@ namespace PM.Api.Controllers
         }
 
         [HttpPut]
-        [HttpPut("v1/pasture")]
+        [HttpPut("v1/edit/{id:string}")]
         [AllowAnonymous]
-        public async Task<IActionResult> Edit(Guid id, [FromBody] Pasture pasture)
+        public async Task<IActionResult> Edit([FromBody] Pasture pasture, Guid id)
         {
             try
             {
@@ -90,7 +91,7 @@ namespace PM.Api.Controllers
         }
         
         
-        [HttpPost("v1/pasture")]
+        [HttpPost("v1/remove/{id:string}{id:string}")]
         [AllowAnonymous]
         public async Task <IActionResult> Remove(Guid idUser, Guid id)
         {

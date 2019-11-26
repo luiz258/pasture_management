@@ -20,7 +20,7 @@ namespace PM.Infra.Repository
         {
             string sql = "INSERT INTO Pasture (" +
                    "Id, " +
-                   "UserId, " +
+                   "PMUserId, " +
                    "FarmId," +
                    "Name, " +
                    "Area, " +
@@ -39,7 +39,7 @@ namespace PM.Infra.Repository
                    "RateCapacity," +
                    "RateFractional) values " +
                    "(@Id, " +
-                   "@UserId, " +
+                   "@PMUserId, " +
                    "@FarmId, " +
                    "@Name, " +
                    "@Area, " +
@@ -65,7 +65,7 @@ namespace PM.Infra.Repository
         {
             string sql = "UPDATE Pasture SET " +
                    "PastureId=@PastureId, " +
-                   "UserId=@UserId, " +
+                   "PMUserId=@PMUserId, " +
                    "FarmId=@FarmId, " +
                    "Name=@Name, " +
                    "Area=@Area, " +

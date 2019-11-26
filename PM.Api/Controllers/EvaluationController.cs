@@ -8,6 +8,8 @@ using PM.Business.Models;
 
 namespace PM.Api.Controllers
 {
+    [ApiController]
+    [Route("v1/evaluation")]
     public class EvaluationController : ControllerBase
     {
         private readonly IEvaluationRepository _repEvaluation;
@@ -20,7 +22,7 @@ namespace PM.Api.Controllers
             _repEvaluation = repEvaluation;
         }
      
-        [HttpPost("v1/evaluation")]
+        [HttpPost("")]
         public async Task<IActionResult> Post([FromBody] Evaluation model)
         { 
             try
@@ -36,7 +38,7 @@ namespace PM.Api.Controllers
 
         }
 
-        [HttpGet("v1/evaluation/{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IEnumerable<Evaluation>> GetListAll(Guid farmId)
         {
             return await _repEvaluation.ListAllEvaluation(farmId);

@@ -20,7 +20,7 @@ namespace PM.Infra.Repository
         {
             await _db.Connection.ExecuteAsync("INSERT INTO Farm(" +
                 "Id, " +
-                "UserId, " +
+                "PMUserId, " +
                 "Name, " +
                 "Document" +
                 "Area, " +
@@ -28,7 +28,7 @@ namespace PM.Infra.Repository
                 "City, " +
                 "UF,)values" +
                 "(@Id," +
-                "@UserId" +
+                "@PMUserId" +
                 "@Name" +
                 "@Document" +
                 "@Area" +
@@ -46,7 +46,7 @@ namespace PM.Infra.Repository
         {
             await _db.Connection.ExecuteAsync("UPDATE SET Farm(" +
                 "Id=@Id, " +
-                "UserId=@UserId, " +
+                "PMUserId=@PMUserId, " +
                 "Name=@Name, " +
                 "Document=@Document" +
                 "Area=@Area, " +

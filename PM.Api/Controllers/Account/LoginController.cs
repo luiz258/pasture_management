@@ -11,7 +11,7 @@ using PM.Infra.Repository;
 
 namespace PM.Api.Controllers.Account
 {
-    [Route("v1/account")]
+    [Route("v1/login")]
     public class LoginController : ControllerBase
     {
         private readonly IUserRepository _repUser;
@@ -21,8 +21,8 @@ namespace PM.Api.Controllers.Account
         }
 
         [HttpPost]
-        [Route("login")]
-        [AllowAnonymous]
+        [Route("v1/create")]
+        [Authorize(Roles = "manager")]
         public async Task<ActionResult<dynamic>> Authenticate([FromBody] User model)
         {
             
@@ -48,19 +48,19 @@ namespace PM.Api.Controllers.Account
 
 
         //Endpoints test of autêntication
-        [HttpGet]
-        [Route("authenticated")]
-        [Authorize]
-        public string Authenticated() => String.Format("Autenticado - {0}", User.Identity.Name);
+        //[HttpGet]
+        //[Route("authenticated")]
+        //[Authorize]
+        //public string Authenticated() => String.Format("Autenticado - {0}", User.Identity.Name);
 
-        [HttpGet]
-        [Route("employee")]
-        [Authorize(Roles = "consult,manager")]
-        public string Employee() => "Funcionário";
+        //[HttpGet]
+        //[Route("employee")]
+        //[Authorize(Roles = "consult,manager")]
+        //public string Employee() => "Funcionário";
 
-        [HttpGet]
-        [Route("manager")]
-        [Authorize(Roles = "manager")]
-        public string Manager() => "Gerente";
+        //[HttpGet]
+        //[Route("manager")]
+        //[Authorize(Roles = "manager")]
+        //public string Manager() => "Gerente";
     }
 }
