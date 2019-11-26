@@ -22,7 +22,7 @@ namespace PM.Api.Controllers
             _repEvaluation = repEvaluation;
         }
      
-        [HttpPost("")]
+        [HttpPost("v1/create")]
         public async Task<IActionResult> Post([FromBody] Evaluation model)
         { 
             try
@@ -38,7 +38,7 @@ namespace PM.Api.Controllers
 
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("v1/{id:string}")]
         public async Task<IEnumerable<Evaluation>> GetListAll(Guid farmId)
         {
             return await _repEvaluation.ListAllEvaluation(farmId);

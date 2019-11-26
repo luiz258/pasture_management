@@ -1,5 +1,6 @@
 ﻿using PM.Business.IRepository;
 using PM.Business.Models;
+using PM.Infra.DataContext;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,9 +10,14 @@ namespace PM.Infra.Repository
 {
     public class UserRepository : IUserRepository
     {
+        private readonly PMDataContext _db;
+        public UserRepository(PMDataContext db)
+        {
+            _db = db;
+        }
         public bool Authenticate(string Email, string Password)
         {
-            throw new NotImplementedException();
+            _db.Connection
         }
 
         public Task Create(User model)

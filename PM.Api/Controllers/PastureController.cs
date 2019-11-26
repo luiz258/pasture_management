@@ -14,6 +14,7 @@ namespace PM.Api.Controllers
    
     [ApiController]
     [Route("v1/pasture")]
+    [AllowAnonymous]
     public class PastureController : Controller
     {
         private readonly IPastureRepository _repPasture;
@@ -39,7 +40,7 @@ namespace PM.Api.Controllers
             return await _repPasture.ListPasture();
         }
         
-        [HttpGet("v1/listHistoric/{id:string}")]
+        [HttpGet("v1/{id:string}")]
         [AllowAnonymous]
         public async Task<IEnumerable<Pasture>> GetListHistoricDatasFarm( Guid farmId)
         {
@@ -47,7 +48,7 @@ namespace PM.Api.Controllers
         }
 
        
-        [HttpGet("v1/pasture/{id:string},{id:string}")]
+        [HttpGet("v1/{id:string}/{id:string}")]
         [AllowAnonymous]
         public async Task<Pasture> GetDetail(Guid farmId, Guid pastureId)
         {
@@ -91,7 +92,7 @@ namespace PM.Api.Controllers
         }
         
         
-        [HttpPost("v1/remove/{id:string}{id:string}")]
+        [HttpPost("v1/{id:string}/{id:string}")]
         [AllowAnonymous]
         public async Task <IActionResult> Remove(Guid idUser, Guid id)
         {

@@ -42,7 +42,7 @@ namespace PM.Api.Controllers.Account
 
         //Test Routes, Authorization
         [HttpGet]
-        [Route("login")]
+        [Route("v1/login")]
         [AllowAnonymous]
         public string Anonymous() => "Anônimo";
 
