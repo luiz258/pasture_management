@@ -11,50 +11,52 @@ using PM.Business.Models;
 
 namespace PM.Api.Controllers
 {
-    [Route("v1/pasture")]
-    public class PastureController : ControllerBase
+   
+  
+    public class PastureController : Controller
     {
         private readonly IPastureRepository _repPasture;
-    
-
-        
+           
         public PastureController(IPastureRepository repPasture)
         {
             _repPasture = repPasture;
             
-        }
+        }        
 
-        [HttpGet]
-        [Route("")]
+        [HttpGet("")]
         [AllowAnonymous]
         public string Inicio()
         {
-            return "Api UCP"+DateTime.Now;
+            return "Api PastureManagement"+DateTime.Now;
         }
 
-        [HttpGet]
-        [Route("List")]
+        
+        [HttpGet("v1/pasture")]
+        [AllowAnonymous]
         public async Task<IEnumerable<Pasture>> GetListFarm()
         {
             return await _repPasture.ListPasture();
         }
-        [HttpGet]
-        [Route("v1/pasture")]
-        public async Task<IEnumerable<Pasture>> GetListHistoricDatasFarm( Guid FarmId)
+        
+        [HttpGet("v1/pasture/{id}")]
+        [AllowAnonymous]
+        public async Task<IEnumerable<Pasture>> GetListHistoricDatasFarm( Guid farmId)
         {
             return await _repPasture.ListPasture();
         }
 
-        [HttpGet]
-        [Route("/{id}")]
-        public async Task<Pasture> GetPasture(Guid id)
+       
+        [HttpGet("v1/pasture/{id},{id}")]
+        [AllowAnonymous]
+        public async Task<Pasture> GetDetail(Guid farmId, Guid pastureId)
         {
-            return await _repPasture.Get(id);
+            return await _repPasture.Get(farmId, pastureId);
 
         }
 
-        [HttpPost]
-        [Route("v1/pasture")]
+     
+        [HttpPost("v1/pasture")]
+        [AllowAnonymous]
         public async Task<IActionResult> Post([FromBody] Pasture pasture )
         {
             try
@@ -71,7 +73,8 @@ namespace PM.Api.Controllers
         }
 
         [HttpPut]
-        [Route("v1/pasture/{idUser}{idFarm}")]
+        [HttpPut("v1/pasture")]
+        [AllowAnonymous]
         public async Task<IActionResult> Edit(Guid id, [FromBody] Pasture pasture)
         {
             try
@@ -86,8 +89,9 @@ namespace PM.Api.Controllers
             }
         }
         
-        [HttpPost]
-        [Route("v1/pasture/{idUser}{id}")]
+        
+        [HttpPost("v1/pasture")]
+        [AllowAnonymous]
         public async Task <IActionResult> Remove(Guid idUser, Guid id)
         {
             try
@@ -100,10 +104,9 @@ namespace PM.Api.Controllers
                     return BadRequest();                
             }
         }
+        
 
-
-      
-    }
+        }
 
     
 

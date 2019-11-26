@@ -4,26 +4,7 @@ namespace PM.Business.Models
 {
     public class Pasture : Entity  //MATRIZ DE DADOS   AVALI
     {
-        public Pasture(
-            string namePasture, 
-            double area,
-            string grassType,
-            string description,
-            DateTime dataInitial,
-            int qtdAnimals,
-            double weightMedium,
-            double weightTotal,
-            string typeFlock,
-            string breed,
-            DateTime ageMonths,
-            string sexo,
-            string objective
-
-            )
-        {
-
-        }
-        public Guid Id { get; private set; }
+       
         public Guid UserId { get; private set; }
         public Guid FarmId { get; private set; }
         public string NamePasture { get; private set; }
@@ -35,11 +16,18 @@ namespace PM.Business.Models
         public int QtdAnimals { get; private set; }
         public double WeightMedium { get; private set; }
         public double WeightTotal { get; private set; }
-        public string TypeFlock { get; private set; }// tipo de rebanho
-        public string Breed { get; private set; }// raça
+        public string TypeFlock { get; private set; } // tipo de rebanho
+        public string Race { get; private set; } // raça
         public DateTime AgeMonths  { get; private set; } // SUBTRAI O NUMERO DE DIAS EM IDADE
         public string Sexo { get; private set; }
         public string Objective { get; private set; }
+
+        public double CapacityUA { get; set; }
+        public int RateCapacity { get; set; }
+        public int RateFractional { get; set; }
+        public string Condition { get; set; }
+
+
 
     }
 }

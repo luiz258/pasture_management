@@ -13,7 +13,7 @@ namespace PM.Infra.DataContext
 
         public PMDataContext()
         {
-            Connection = new SqlConnection("Server = den1.mssql7.gear.host; Database = pontuaedb; User ID = pontuaedb; Password = Co8s89u_Xr5!; ");
+            Connection = new SqlConnection("Server=DESKTOP-VI9V6I4;Database=PastureManagement;Trusted_Connection=True;");
             Connection.Open();
         }
 

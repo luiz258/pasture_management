@@ -30,10 +30,7 @@ namespace PM.Infra.Repository
                 "RFS, " +
                 "NFV, " +
                 "Note, " +
-                "EvaluationDate, " +
-                "CapacityUA, " +
-                "RateCapacity, " +
-                "RateFractional) values" +
+                "Date) values" +
                 "(@Id, " +
                 "@UserId, " +
                 "@FarmId, " +
@@ -42,29 +39,37 @@ namespace PM.Infra.Repository
                 "@RFS, " +
                 "@NFV, " +
                 "@Note, " +
-                "@EvaluationDate, " +
-                "@CapacityUA, " +
-                "@RateCapacity, " +
-                "@RateFractional) ", new { model });
+                "@Date) ", new { model });
          
         }
 
-        public Task Evaluation(Guid FarmId)
+        //LISTA DE TODOS OS PASTOS DA PROPRIEDADE
+        public async Task<IEnumerable<Pasture>> ListAllEvaluation(Guid FarmId)
         {
-            throw new NotImplementedException();
+            return await _db.Connection.QueryFirstOrDefaultAsync<List<Pasture>>("SELECT * FROM Pasture WHERE FarmId=@FarmId", new { @FarmId = FarmId });
         }
 
-        public Task GetById(Guid FarmId, Guid PastureId)
+        //LISTA DE TODAS AS AVALIAÇÕES DE UM PASTO DA PROPRIEDADE
+        public async Task<IEnumerable<Evaluation>> ListAllEvaluation(DateTime Data, Guid FarmId, Guid PastureId)
         {
-            throw new NotImplementedException();
+            return await _db.Connection.QueryFirstOrDefaultAsync<List<Evaluation>>("SELECT * FROM Evaluation WHERE FarmId=@FarmId and PastureId=@PastureId and Data=@Data", new{ @FarmId = FarmId, @PastureId = PastureId, @Data = Data }); 
         }
 
-        public Task GetEvaluation(Guid FarmId)
+        //BUSCA DA AVALIAÇÃO DE UM PASTO DA PROPRIEDADE 30 DIAS DA AVALIAÇÃO ANTERIOR
+        public async Task<IEnumerable<Evaluation>> ListEvaluationThirtyDays(Guid FarmId, Guid PastureId)
         {
-            throw new NotImplementedException();
+            return await _db.Connection.QueryFirstOrDefaultAsync<List<Evaluation>>("SELECT * FROM Evaluation WHERE FarmId=@FarmId and PastureId=@PastureId and Data  BETWEEN DATEADD(MONTH, 0, CONVERT(Date, GETDATE())) AND DATEADD(MONTH, 1, CONVERT(DATE, GETDATE()))", new { @FarmId = FarmId, @PastureId = PastureId });
+
         }
 
-        public Task<IEnumerable<Evaluation>> ListEvaluation(Guid FarmId)
+        //FAZER JOIN DA TABELA PASTURE E EVALUATION PEGA  ATRIBUTO: DA VALUTION E JUNTA COM A 
+        //busca o numero de dias que foi feita a avaliação
+        public async Task<IEnumerable<Evaluation>>GetDayPeriod(DateTime Date, Guid FarmId)
+        {
+            return await _db.Connection.QueryFirstOrDefaultAsync<List<Evaluation>>("SELECT DATEDIFF(DAY, Date=@Date, GETDATE())", new { @Date = Date });
+        }
+
+        Task<IEnumerable<Evaluation>> IEvaluationRepository.ListAllEvaluation(Guid FarmId)
         {
             throw new NotImplementedException();
         }

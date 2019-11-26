@@ -11,11 +11,11 @@ namespace PM.Business.IRepository
         Task Create(User model);
         Task Edit(User model);
         Task Delete(User model);
-        Task<User> GetById(Guid UserId, Guid FarmId);//obter detahe de uma fazenda
+        Task<User> GetById(Guid UserId, Guid FarmId);
         Task<IEnumerable<User>> ListAccounts();
         Task<IEnumerable<User>> ListUsers(Guid UserId, Guid FarmId);
-        Task<User> GetIdUser(Guid Id);
         bool Authenticate(string Email, string Password);
         Task<User> GetUser(string Email);
+        Task<User> GetIdUser(Guid Id);
     }
 }

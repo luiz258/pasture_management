@@ -12,7 +12,7 @@ namespace PM.Business.IRepository
         Task Edit(Pasture model);
         Task Delete(Guid UserId, Guid Id);
         Task<IEnumerable<Pasture>> ListPasture();
-        Task<Pasture>Get(Guid id);
+        Task<Pasture>Get(Guid FarmId, Guid PastureId);
 
     }
 }

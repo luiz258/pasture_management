@@ -14,14 +14,13 @@ namespace PM.Api.Controllers.Account
 
         private readonly UserRepository _repUser;
         //UserRepository _repUser = new UserRepository(new SQL());
-
+        
         public UserController(UserRepository repUser)
         {
             _repUser = repUser;
         }
-
-        [HttpPost]
-        [Route("v1/user")]
+        
+        [HttpPost("v1/user")]
         public async Task<IActionResult> PostUser([FromBody] User user)
         {         
             await _repUser.Create(user);

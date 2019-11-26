@@ -11,18 +11,21 @@ namespace PM.Api.Controllers
     public class EvaluationController : ControllerBase
     {
         private readonly IEvaluationRepository _repEvaluation;
-        public EvaluationController(IEvaluationRepository repEvaluation)
+        private readonly IPastureRepository _repPasture;
+        private readonly IFarmRepository _repFarm;
+        public EvaluationController(IEvaluationRepository repEvaluation, IPastureRepository repPasture, IFarmRepository repFarm)
         {
+            _repPasture = repPasture;
+            _repFarm = repFarm;
             _repEvaluation = repEvaluation;
         }
-        //Metodos Evaluation
-        [HttpPost]
-        [Route("v1/pasture")]
-        public async Task<IActionResult> Post([FromBody] Evaluation evaluation)
-        {
+     
+        [HttpPost("v1/evaluation")]
+        public async Task<IActionResult> Post([FromBody] Evaluation model)
+        { 
             try
-            {
-                await _repEvaluation.Create(evaluation);
+            {                
+                await _repEvaluation.Create(model);
                 return Ok("OK");
 
             }
@@ -33,9 +36,12 @@ namespace PM.Api.Controllers
 
         }
 
-        public async Task<IEnumerable<Evaluation>> GetList(Guid id)
+        [HttpGet("v1/evaluation/{id}")]
+        public async Task<IEnumerable<Evaluation>> GetListAll(Guid farmId)
         {
-            return await _repEvaluation.ListEvaluation(id);
+            return await _repEvaluation.ListAllEvaluation(farmId);
         }
+
+
     }
 }

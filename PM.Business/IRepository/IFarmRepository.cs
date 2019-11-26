@@ -10,11 +10,9 @@ namespace PM.Business.IRepository
     {
         Task Create(Farm model);
         Task Edit(Farm model);
-        Task Delete(Farm model);
-        Task<Farm> GetById(Guid UseId);
+        Task Delete(Guid UseId, Guid FarmId);
+        Task<Guid> GetId(Guid Id);
         Task<IEnumerable<Farm>> ListaFarm(Guid UserId);
-
-        //Task<IEnumerable<Pasture>> ListHistoricDatasFarm(Guid FarmId); //obter registros das informações geradas  por Id Fazenda
-        //Task<Pasture> GetDatas(Guid FarmId);//obter detahe de uma fazenda
+        Task<IEnumerable<Farm>> ListaFarm();
     }
 }

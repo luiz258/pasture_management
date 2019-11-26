@@ -9,8 +9,10 @@ namespace PM.Business.IRepository
     public interface IEvaluationRepository 
     {
         Task Create(Evaluation model);
-        Task GetEvaluation(Guid FarmId);
-        Task GetById(Guid FarmId, Guid PastureId); //Busca Id da fazenda e 
-        Task<IEnumerable<Evaluation>> ListEvaluation(Guid FarmId );
+        Task<IEnumerable<Evaluation>> ListAllEvaluation(Guid FarmId); 
+        Task<IEnumerable<Evaluation>> ListAllEvaluation(DateTime Data, Guid FarmId, Guid PastureId);
+        Task<IEnumerable<Evaluation>> ListEvaluationThirtyDays(Guid FarmId, Guid PastureId);
+
+
     }
 }

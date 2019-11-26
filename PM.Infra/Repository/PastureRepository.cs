@@ -34,7 +34,10 @@ namespace PM.Infra.Repository
                    "Breed," +
                    "AgeMonths," +
                    "Sexo," +
-                   "Objective) values " +
+                   "Objective," +
+                   "CapacityUA, " +
+                   "RateCapacity," +
+                   "RateFractional) values " +
                    "(@Id, " +
                    "@UserId, " +
                    "@FarmId, " +
@@ -50,11 +53,12 @@ namespace PM.Infra.Repository
                    "@Breed, " +
                    "@AgeMonths, " +
                    "@Sexo," +
-                   "@Objective) ";
-            
-              await _db.Connection.ExecuteAsync(sql, model);
-            
+                   "@Objective," +
+                   "@CapacityUA," +
+                   "@RateCapacity," +
+                   "@RateFractional) ";
 
+            await _db.Connection.ExecuteAsync(sql, model);
         }
 
         public async Task Edit(Pasture model)
@@ -62,8 +66,8 @@ namespace PM.Infra.Repository
             string sql = "UPDATE Pasture SET " +
                    "PastureId=@PastureId, " +
                    "UserId=@UserId, " +
-                   "FarmId=@UserId, " +
-                   "Name=@UserId, " +
+                   "FarmId=@FarmId, " +
+                   "Name=@Name, " +
                    "Area=@Area, " +
                    "GrassType=@GrassType, " +
                    "Description=@Description, " +
@@ -75,12 +79,15 @@ namespace PM.Infra.Repository
                    "Breed=@Breed, " +
                    "AgeMonths=@AgeMonths, " +
                    "Sexo=@Sexo, " +
-                   "Objective@Objective  where UserId=@UserId ";
+                   "Objective@Objective," +
+                   "CapacityUA=@CapacityUA," +
+                   "RateCapacity=@RateCapacity," +
+                   "RateFractional=@RateFractional  where UserId=@UserId ";
 
             await _db.Connection.ExecuteAsync(sql, model);
-            
+
         }
-      
+
         public async Task Delete(Guid UserId, Guid Id)
         {
 
@@ -89,12 +96,19 @@ namespace PM.Infra.Repository
 
         public Task<IEnumerable<Pasture>> ListPasture()
         {
-            throw new NotImplementedException(); 
+            throw new NotImplementedException();
         }
 
-        public Task<Pasture>Get(Guid id)
+        public Task<Pasture> Get(Guid FarmId, Guid PastureId)
         {
             throw new NotImplementedException();
         }
+
+        //Join da tabela Pasture com Evaluation
+        public async Task<IEnumerable<Evaluation>> ListAllDataPasture(Guid FarmId, Guid PastureId)
+        {
+            return await _db.Connection.QueryFirstOrDefaultAsync<List<Evaluation>>("SELECT E.Date, P.Name, P.CapacityUA, P.RateCapacityUA, P.RateFractional, P.GrassType, E.Note, E.QtdLeaf, E.RFS, E.NFV P.Condition, E.Period, P.WeightMedium, P.QtdAnimals, P.WeightTotal, P.TypeFlock, P.Race FROM Pasture AS P JOIN Evaluation AS E ON P.Id = E.@PastureId AND  FarmId=@FarmId, AND PastureId=@PastureId", new { @FarmId = FarmId, @PastureId = PastureId });
+        }
     }
+
 }
