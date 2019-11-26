@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PM.Business.IRepository;
 using PM.Business.Models;
@@ -24,6 +25,7 @@ namespace PM.Api.Controllers.Account
         
         [HttpPost]
         [Route("v1/create")]
+        [AllowAnonymous]
         public async Task<IActionResult> PostUser([FromBody] User user)
         {         
             await _repUser.Create(user);

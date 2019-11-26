@@ -38,7 +38,7 @@ namespace PM.Api.Controllers
 
         }
 
-        [HttpGet("v1/{id:string}")]
+        [HttpGet("v1/{farmId}")]
         public async Task<IEnumerable<Evaluation>> GetListAll(Guid farmId)
         {
             return await _repEvaluation.ListAllEvaluation(farmId);

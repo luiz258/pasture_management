@@ -40,7 +40,7 @@ namespace PM.Api.Controllers
             return await _repPasture.ListPasture();
         }
         
-        [HttpGet("v1/{id:string}")]
+        [HttpGet("v1/{farmId}")]
         [AllowAnonymous]
         public async Task<IEnumerable<Pasture>> GetListHistoricDatasFarm( Guid farmId)
         {
@@ -48,11 +48,11 @@ namespace PM.Api.Controllers
         }
 
        
-        [HttpGet("v1/{id:string}/{id:string}")]
+        [HttpGet("v1/{farmId}/{idPasture}")]
         [AllowAnonymous]
-        public async Task<Pasture> GetDetail(Guid farmId, Guid pastureId)
+        public async Task<Pasture> GetDetail(Guid farmId, Guid idPasture)
         {
-            return await _repPasture.Get(farmId, pastureId);
+            return await _repPasture.Get(farmId, idPasture);
 
         }
 
@@ -75,9 +75,9 @@ namespace PM.Api.Controllers
         }
 
         [HttpPut]
-        [HttpPut("v1/edit/{id:string}")]
+        [HttpPut("v1/edit/{idUser}")]
         [AllowAnonymous]
-        public async Task<IActionResult> Edit([FromBody] Pasture pasture, Guid id)
+        public async Task<IActionResult> Edit([FromBody] Pasture pasture, Guid idUser)
         {
             try
             {
@@ -92,13 +92,13 @@ namespace PM.Api.Controllers
         }
         
         
-        [HttpPost("v1/{id:string}/{id:string}")]
+        [HttpPost("v1/{idUser}/{idPasture}")]
         [AllowAnonymous]
-        public async Task <IActionResult> Remove(Guid idUser, Guid id)
+        public async Task <IActionResult> Remove(Guid idUser, Guid idPasture)
         {
             try
             {
-                await _repPasture.Delete(idUser, id);
+                await _repPasture.Delete(idUser, idPasture);
                 return Ok();
             }
             catch

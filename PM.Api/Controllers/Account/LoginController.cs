@@ -21,16 +21,15 @@ namespace PM.Api.Controllers.Account
         }
 
         [HttpPost]
-        [Route("v1/create")]
-        [Authorize(Roles = "manager")]
+        [Route("")]
+        [AllowAnonymous]
         public async Task<ActionResult<dynamic>> Authenticate([FromBody] User model)
         {
-            
-            //if false return NotFound
+
             if (!_repUser.Authenticate(model.Email, model.Password))
                 return NotFound(new { message = "Usuário ou senha inválidos" });
 
-            var user = await _repUser.GetUser(model.Email);
+            var user = await _repUser.GetAccount(model.Email);
 
             var token = TokenService.GenerateToken(user);
             return new
@@ -40,27 +39,5 @@ namespace PM.Api.Controllers.Account
             };
         }
 
-        //Test Routes, Authorization
-        [HttpGet]
-        [Route("v1/login")]
-        [AllowAnonymous]
-        public string Anonymous() => "Anônimo";
-
-
-        //Endpoints test of autêntication
-        //[HttpGet]
-        //[Route("authenticated")]
-        //[Authorize]
-        //public string Authenticated() => String.Format("Autenticado - {0}", User.Identity.Name);
-
-        //[HttpGet]
-        //[Route("employee")]
-        //[Authorize(Roles = "consult,manager")]
-        //public string Employee() => "Funcionário";
-
-        //[HttpGet]
-        //[Route("manager")]
-        //[Authorize(Roles = "manager")]
-        //public string Manager() => "Gerente";
     }
 }

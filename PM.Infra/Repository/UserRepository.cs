@@ -1,4 +1,5 @@
-﻿using PM.Business.IRepository;
+﻿using Dapper;
+using PM.Business.IRepository;
 using PM.Business.Models;
 using PM.Infra.DataContext;
 using System;
@@ -17,7 +18,12 @@ namespace PM.Infra.Repository
         }
         public bool Authenticate(string Email, string Password)
         {
-            _db.Connection
+            return _db.Connection
+                .QueryFirstOrDefault<bool>("SELECT CASE WHEN EXISTS( SELECT ID FROM PMUSer WHERE Email=@Email AND Password=@Password) THEN CAST( 1 AS BIT) ELSE CAST(0 AS BIT)  END", new
+                {
+                    @Email = Email,
+                    @Password = Password
+                });
         }
 
         public Task Create(User model)
@@ -25,39 +31,27 @@ namespace PM.Infra.Repository
             throw new NotImplementedException();
         }
 
-        public Task Delete(User model)
+        public async Task Delete(User model)
         {
-            throw new NotImplementedException();
+            await _db.Connection.ExecuteAsync("DELETE  FROM PMUser WHERE Id = @Id", new { model });
         }
 
-        public Task Edit(User model)
+        public async Task Edit(User model)
         {
-            throw new NotImplementedException();
+           await _db.Connection.ExecuteAsync("UPDATE PMUser SET Email=@Email, Password=@Password WHERE Id=@Id", new {model});
         }
 
-        public Task<User> GetById(Guid UserId, Guid FarmId)
+        public async Task<User> GetAccount(string Email)
         {
-            throw new NotImplementedException();
+            return await _db.Connection.QueryFirstOrDefaultAsync<User>("SELECT Id From PMUser  WHERE Email=@Email", new { @Email = Email });
+            
         }
 
-        public Task<User> GetIdUser(Guid Id)
+        public async Task<IEnumerable<User>> ListAccounts(Guid UserId, Guid FarmId)
         {
-            throw new NotImplementedException();
+           return await  _db.Connection.QueryFirstOrDefaultAsync<List<User>>("SELECT * FROM PMUser WHERE UserId=@UserId AND FarmId=@FarmId ", new { @UserId = UserId, @FarmId = FarmId });
         }
 
-        public Task<User> GetUser(string Email)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<IEnumerable<User>> ListAccounts()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<User>> ListUsers(Guid UserId, Guid FarmId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
