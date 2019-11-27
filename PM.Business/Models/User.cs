@@ -22,12 +22,12 @@ namespace PM.Business.Models
         //    Password = password;
         //}
         
-        public string UserName { get; private set; }
-        public string Telephone { get; private set; }
-        public string Email { get; private set; }
-        public string Password { get; private set; }
-        public string Office { get; private set; } //cargo
-        public string Role { get; private set; }  // Pecuarista, Empregado, Consultor
-        public bool Estado { get; private set; }
+        public string UserName { get; set; }
+        public string Telephone { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string Office { get; set; } //cargo
+        public string Role { get; set; }  // Pecuarista, Empregado, Consultor
+        public bool Estado { get; set; }
     }
 }

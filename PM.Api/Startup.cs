@@ -27,11 +27,7 @@ namespace PM.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddResponseCompression(options =>
-            {
-                options.Providers.Add<GzipCompressionProvider>();
-                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "application/json" });
-            });
+            services.AddResponseCompression();
             services.AddControllers();
             services.AddScoped<PMDataContext, PMDataContext>();
             services.AddTransient<IPastureRepository, PastureRepository>();
