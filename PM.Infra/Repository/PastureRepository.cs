@@ -22,16 +22,16 @@ namespace PM.Infra.Repository
                    "Id, " +
                    "PMUserId, " +
                    "FarmId," +
-                   "Name, " +
+                   "PastureName, " +
                    "Area, " +
                    "GrassType, " +
-                   "Description, " +
+                   "PastureDescription, " +
                    "DataInitial," +
                    "QtdAnimals," +
                    "WeightMedium," +
                    "WeightTotal," +
                    "TypeFlock," +
-                   "Breed," +
+                   "Race," +
                    "AgeMonths," +
                    "Sexo," +
                    "Objective," +
@@ -41,16 +41,16 @@ namespace PM.Infra.Repository
                    "(@Id, " +
                    "@PMUserId, " +
                    "@FarmId, " +
-                   "@Name, " +
+                   "@PastureName, " +
                    "@Area, " +
                    "@GrassType, " +
-                   "@Description, " +
+                   "@PastureDescription, " +
                    "@DataInitial, " +
                    "@QtdAnimals, " +
                    "@WeightMedium, " +
                    "@WeightTotal, " +
                    "@TypeFlock, " +
-                   "@Breed, " +
+                   "@Race, " +
                    "@AgeMonths, " +
                    "@Sexo," +
                    "@Objective," +
@@ -67,7 +67,7 @@ namespace PM.Infra.Repository
                    "PastureId=@PastureId, " +
                    "PMUserId=@PMUserId, " +
                    "FarmId=@FarmId, " +
-                   "Name=@Name, " +
+                   "PastureName=@PastureName, " +
                    "Area=@Area, " +
                    "GrassType=@GrassType, " +
                    "Description=@Description, " +
@@ -76,13 +76,13 @@ namespace PM.Infra.Repository
                    "WeightMedium=@WeightMedium, " +
                    "WeightTotal=@WeightTotal, " +
                    "TypeFlock=@TypeFlock, " +
-                   "Breed=@Breed, " +
+                   "Race=@Race, " +
                    "AgeMonths=@AgeMonths, " +
                    "Sexo=@Sexo, " +
                    "Objective@Objective," +
                    "CapacityUA=@CapacityUA," +
                    "RateCapacity=@RateCapacity," +
-                   "RateFractional=@RateFractional  where UserId=@UserId ";
+                   "RateFractional=@RateFractional  WHERE UserId=@UserId ";
 
             await _db.Connection.ExecuteAsync(sql, model);
 
@@ -91,7 +91,7 @@ namespace PM.Infra.Repository
         public async Task Delete(Guid UserId, Guid Id)
         {
 
-            await _db.Connection.ExecuteAsync("DELETE FROM Pasture WHERE UserId=@Id AND Id=@Id");
+            await _db.Connection.ExecuteAsync("DELETE FROM Pasture WHERE UserId=@Id AND Id=@Id",new { UserId = @UserId, Id = @Id });
         }
 
         public Task<IEnumerable<Pasture>> ListPasture()
@@ -107,7 +107,7 @@ namespace PM.Infra.Repository
         //Join da tabela Pasture com Evaluation
         public async Task<IEnumerable<Evaluation>> ListAllDataPasture(Guid FarmId, Guid PastureId)
         {
-            return await _db.Connection.QueryFirstOrDefaultAsync<List<Evaluation>>("SELECT E.Date, P.Name, P.CapacityUA, P.RateCapacityUA, P.RateFractional, P.GrassType, E.Note, E.QtdLeaf, E.RFS, E.NFV P.Condition, E.Period, P.WeightMedium, P.QtdAnimals, P.WeightTotal, P.TypeFlock, P.Race FROM Pasture AS P JOIN Evaluation AS E ON P.Id = E.@PastureId AND  FarmId=@FarmId, AND PastureId=@PastureId", new { @FarmId = FarmId, @PastureId = PastureId });
+            return await _db.Connection.QueryFirstOrDefaultAsync<List<Evaluation>>("SELECT E.Date, P.PastureName, P.CapacityUA, P.RateCapacityUA, P.RateFractional, P.GrassType, E.Note, E.QtdLeaf, E.RFS, E.NFV P.Condition, E.Period, P.WeightMedium, P.QtdAnimals, P.WeightTotal, P.TypeFlock, P.Race FROM Pasture AS P JOIN Evaluation AS E ON P.Id = E.@PastureId AND  FarmId=@FarmId, AND PastureId=@PastureId", new { @FarmId = FarmId, @PastureId = PastureId });
         }
     }
 

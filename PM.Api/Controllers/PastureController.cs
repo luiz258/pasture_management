@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -11,43 +9,43 @@ using PM.Business.Models;
 
 namespace PM.Api.Controllers
 {
-   
+
     [ApiController]
     [Route("v1/pasture")]
     [AllowAnonymous]
     public class PastureController : Controller
     {
         private readonly IPastureRepository _repPasture;
-           
+
         public PastureController(IPastureRepository repPasture)
         {
             _repPasture = repPasture;
-            
-        }        
+
+        }
 
         [HttpGet("")]
         [AllowAnonymous]
         public string Inicio()
         {
-            return "Api PastureManagement"+DateTime.Now;
+            return "Api PastureManagement" + DateTime.Now;
         }
 
-        
+
         [HttpGet("v1/listPature")]
         [AllowAnonymous]
         public async Task<IEnumerable<Pasture>> GetListFarm()
         {
             return await _repPasture.ListPasture();
         }
-        
+
         [HttpGet("v1/{farmId}")]
         [AllowAnonymous]
-        public async Task<IEnumerable<Pasture>> GetListHistoricDatasFarm( Guid farmId)
+        public async Task<IEnumerable<Pasture>> GetListHistoricDatasFarm(Guid farmId)
         {
             return await _repPasture.ListPasture();
         }
 
-       
+
         [HttpGet("v1/{farmId}/{idPasture}")]
         [AllowAnonymous]
         public async Task<Pasture> GetDetail(Guid farmId, Guid idPasture)
@@ -56,22 +54,22 @@ namespace PM.Api.Controllers
 
         }
 
-     
+
         [HttpPost("v1/create")]
         [AllowAnonymous]
-        public async Task<IActionResult> Post([FromBody] Pasture pasture )
+        public async Task<IActionResult> Post([FromBody] Pasture pasture)
         {
             try
             {
-               await _repPasture.Create(pasture);
-                return Ok ("OK");
-                
+                await _repPasture.Create(pasture);
+                return Ok("OK");
+
             }
             catch
             {
                 return NotFound();
             }
-            
+
         }
 
         [HttpPut]
@@ -82,7 +80,7 @@ namespace PM.Api.Controllers
             try
             {
                 // TODO: Add update logic here
-               await _repPasture.Edit(pasture);
+                await _repPasture.Edit(pasture);
                 return Ok("ok");
             }
             catch
@@ -90,11 +88,11 @@ namespace PM.Api.Controllers
                 return NotFound();
             }
         }
-        
-        
+
+
         [HttpPost("v1/{idUser}/{idPasture}")]
         [AllowAnonymous]
-        public async Task <IActionResult> Remove(Guid idUser, Guid idPasture)
+        public async Task<IActionResult> Remove(Guid idUser, Guid idPasture)
         {
             try
             {
@@ -102,13 +100,13 @@ namespace PM.Api.Controllers
                 return Ok();
             }
             catch
-            {                
-                    return BadRequest();                
+            {
+                return BadRequest();
             }
         }
-        
 
-        }
+
+    }
 
     
 

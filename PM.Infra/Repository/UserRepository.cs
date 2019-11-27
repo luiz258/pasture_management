@@ -16,34 +16,37 @@ namespace PM.Infra.Repository
         {
             _db = db;
         }
-        public bool Authenticate(string Email, string Password)
+        public bool Authenticate(string Email, string PasswordHash)
         {
             return _db.Connection
-                .QueryFirstOrDefault<bool>("SELECT CASE WHEN EXISTS( SELECT ID FROM PMUSer WHERE Email=@Email AND Password=@Password) THEN CAST( 1 AS BIT) ELSE CAST(0 AS BIT)  END", new
+                .QueryFirstOrDefault<bool>("SELECT CASE WHEN EXISTS( SELECT Id FROM PMUSer WHERE Email=@Email AND PasswordHash=@PasswordHash) THEN CAST( 1 AS BIT) ELSE CAST(0 AS BIT)  END", new
                 {
                     @Email = Email,
-                    @Password = Password
+                    @PasswordHash = PasswordHash
                 });
         }
 
-        public Task Create(User model)
+        public async Task Create(User model)
         {
-            throw new NotImplementedException();
+            string sql = "INSERT INTO PMUser(Id, UserName, Telephone, Email, PasswordHash, Office, RoleId, Estado) values(@Id, @UserName, @Telephone, @Email, @PasswordHash, @Office, @RoleId, @Estado)";
+            await _db.Connection.ExecuteAsync(sql, model);
         }
 
         public async Task Delete(User model)
         {
-            await _db.Connection.ExecuteAsync("DELETE  FROM PMUser WHERE Id = @Id", new { model });
+            string sql = "DELETE  FROM PMUser WHERE Id = @Id";
+            await _db.Connection.ExecuteAsync(sql, model);
         }
 
         public async Task Edit(User model)
         {
-           await _db.Connection.ExecuteAsync("UPDATE PMUser SET Email=@Email, Password=@Password WHERE Id=@Id", new {model});
+           string sql = "UPDATE PMUser SET Email=@Email, Password=@Password WHERE Id=@Id";
+           await _db.Connection.ExecuteAsync(sql, model);
         }
 
         public async Task<User> GetAccount(string Email)
         {
-            return await _db.Connection.QueryFirstOrDefaultAsync<User>("SELECT Id From PMUser  WHERE Email=@Email", new { @Email = Email });
+            return await _db.Connection.QueryFirstOrDefaultAsync<User>("SELECT Id, RoleId From PMUser  WHERE Email=@Email", new { @Email = Email });
             
         }
 

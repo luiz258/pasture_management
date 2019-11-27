@@ -21,7 +21,7 @@ namespace PM.Infra.Repository
 
         public async Task Create(Evaluation model)
         {
-            await _db.Connection.ExecuteAsync("INSERT INTO Evaluation(" +
+            string sql = "INSERT INTO Evaluation(" +
                 "Id, " +
                 "PMUserId, " +
                 "FarmId, " +
@@ -30,7 +30,7 @@ namespace PM.Infra.Repository
                 "RFS, " +
                 "NFV, " +
                 "Note, " +
-                "Date) values" +
+                "EvaluationDate) values" +
                 "(@Id, " +
                 "@PMUserId, " +
                 "@FarmId, " +
@@ -39,8 +39,10 @@ namespace PM.Infra.Repository
                 "@RFS, " +
                 "@NFV, " +
                 "@Note, " +
-                "@Date) ", new { model });
-         
+                "@EvaluationDate) ";
+            await _db.Connection.ExecuteAsync(sql, model);
+
+
         }
 
         //LISTA DE TODOS OS PASTOS DA PROPRIEDADE

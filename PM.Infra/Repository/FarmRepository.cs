@@ -21,10 +21,10 @@ namespace PM.Infra.Repository
             await _db.Connection.ExecuteAsync("INSERT INTO Farm(" +
                 "Id, " +
                 "PMUserId, " +
-                "Name, " +
+                "FarmName, " +
                 "Document" +
                 "Area, " +
-                "Address, " +
+                "FarmAddress, " +
                 "City, " +
                 "UF,)values" +
                 "(@Id," +
@@ -32,7 +32,7 @@ namespace PM.Infra.Repository
                 "@Name" +
                 "@Document" +
                 "@Area" +
-                "@Address" +
+                "@FarmAddress" +
                 "@City" +
                 "@UF) ", new {  model });
         }
@@ -47,10 +47,10 @@ namespace PM.Infra.Repository
             await _db.Connection.ExecuteAsync("UPDATE SET Farm(" +
                 "Id=@Id, " +
                 "PMUserId=@PMUserId, " +
-                "Name=@Name, " +
+                "FarmName=@FarmName, " +
                 "Document=@Document" +
                 "Area=@Area, " +
-                "Address=@Address, " +
+                "FarmAddress=@FarmAddress, " +
                 "City=@City, " +
                 "UF=@UF) ", new { model });
         }

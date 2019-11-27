@@ -26,15 +26,16 @@ namespace PM.Api.Controllers.Account
         public async Task<ActionResult<dynamic>> Authenticate([FromBody] User model)
         {
 
-            if (!_repUser.Authenticate(model.Email, model.Password))
+            if (!_repUser.Authenticate(model.Email, model.PasswordHash))
                 return NotFound(new { message = "Usuário ou senha inválidos" });
 
             var user = await _repUser.GetAccount(model.Email);
 
             var token = TokenService.GenerateToken(user);
             return new
-            {
-                user = user,
+            {               
+                RoleId = user.RoleId,
+                Id = user.Id,
                 token = token
             };
         }

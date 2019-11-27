@@ -27,9 +27,10 @@ namespace PM.Api.Controllers.Account
         [Route("v1/create")]
         [AllowAnonymous]
         public async Task<IActionResult> PostUser([FromBody] User user)
-        {         
-            await _repUser.Create(user);
-            return Ok("Ok");
+        {
+                    
+               await _repUser.Create(user);
+               return Ok("Ok");
         }
     }
-}
+}   
