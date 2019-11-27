@@ -11,14 +11,14 @@ using PM.Infra.Repository;
 namespace PM.Api.Controllers.Account
 {
     [ApiController]
-    [Route("V1/user")]
+    [Route("v1/user")]
     public class UserController : ControllerBase
     {
         
         private readonly IUserRepository _repUser;
         //UserRepository _repUser = new UserRepository(new SQL());
         
-        public UserController(UserRepository repUser)
+        public UserController(IUserRepository repUser)
         {
             _repUser = repUser;
         }

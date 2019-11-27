@@ -1,10 +1,11 @@
 ﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
       "applicationUrl": "http://localhost:63931/",
-      "sslPort": 0
+      "sslPort": 44387
     }
   },
   "profiles": {
@@ -16,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Backoffice": {
+    "PM.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
